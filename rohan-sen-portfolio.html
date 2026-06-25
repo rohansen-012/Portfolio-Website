@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rohan Sen — Aerospace Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0b1118;
+    --bg2:      #0f1923;
+    --bg3:      #152030;
+    --blue-dim: #185FA5;
+    --blue-mid: #378ADD;
+    --blue-lt:  #85B7EB;
+    --blue-pale:#B5D4F4;
+    --blue-glow:#E6F1FB;
+    --grid-line: rgba(56,138,221,0.08);
+    --border:    rgba(56,138,221,0.22);
+    --border-str:rgba(56,138,221,0.5);
+    --text-hi:   #dceeff;
+    --text-mid:  #85B7EB;
+    --text-muted:#4a7aaa;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --radius: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text-hi);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── CORNER CROSSHAIR DECORATION ── */
+  .crosshair {
+    position: fixed;
+    width: 20px; height: 20px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .crosshair::before, .crosshair::after {
+    content: '';
+    position: absolute;
+    background: var(--blue-dim);
+  }
+  .crosshair::before { width: 1px; height: 100%; left: 50%; }
+  .crosshair::after  { width: 100%; height: 1px; top: 50%; }
+  .crosshair.tl { top: 20px; left: 20px; }
+  .crosshair.tr { top: 20px; right: 20px; }
+  .crosshair.bl { bottom: 20px; left: 20px; }
+  .crosshair.br { bottom: 20px; right: 20px; }
+
+  /* ── LAYOUT ── */
+  .page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(11,17,24,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue-mid);
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-muted); }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--blue-mid); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 6rem 0 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue-mid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero-eyebrow::before { content: '// '; color: var(--text-muted); }
+  .hero-name {
+    font-family: var(--mono);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    color: var(--text-hi);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+  .hero-name em {
+    font-style: normal;
+    color: var(--blue-mid);
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--blue-lt);
+    margin-bottom: 1.5rem;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .hero-bio {
+    font-size: 15px;
+    color: var(--text-mid);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+  .hero-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--blue-dim);
+    color: var(--blue-pale);
+    border: 1px solid var(--blue-mid);
+  }
+  .btn-primary:hover {
+    background: var(--blue-mid);
+    color: #fff;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    border-color: var(--blue-dim);
+    color: var(--blue-lt);
+  }
+
+  /* ── SCHEMATIC DIAGRAM ── */
+  .hero-schematic {
+    flex-shrink: 0;
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+  .schematic-svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+  }
+
+  /* ── STATS ROW ── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+  .stat {
+    padding: 1.5rem 1.25rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--blue-lt);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── SECTION ── */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .section-tag::before { content: '/* '; }
+  .section-tag::after  { content: ' */'; }
+  .section-title {
+    font-family: var(--mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-hi);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── PROJECTS ── */
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--blue-dim);
+    transition: background 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--border-str);
+  }
+  .project-card:hover::before {
+    background: var(--blue-mid);
+  }
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .project-index {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue-mid);
+    border: 1px solid var(--blue-dim);
+    border-radius: var(--radius);
+    padding: 2px 8px;
+    letter-spacing: 0.06em;
+  }
+  .project-title {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .project-desc {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .project-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tool-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue-lt);
+    background: rgba(56,138,221,0.08);
+    border: 1px solid rgba(56,138,221,0.2);
+    border-radius: 2px;
+    padding: 3px 9px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: rgba(56,138,221,0.35);
+  }
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .exp-role {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-hi);
+  }
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--blue-mid);
+    margin-bottom: 1rem;
+  }
+  .exp-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .exp-bullets li {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--blue-dim);
+    font-size: 11px;
+    top: 3px;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .skill-group {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+  }
+  .skill-group-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .skill-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--blue-lt);
+    background: rgba(56,138,221,0.07);
+    border: 1px solid rgba(56,138,221,0.18);
+    border-radius: 2px;
+    padding: 4px 10px;
+  }
+
+  /* ── CERTIFICATIONS ── */
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-mid);
+  }
+  .cert-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--blue-dim);
+    flex-shrink: 0;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+  .about-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+  .about-block-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    filter: grayscale(0.2);
+  }
+  .about-block-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--blue-mid);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .about-block-body {
+    font-size: 14px;
+    color: var(--text-mid);
+    line-height: 1.7;
+  }
+  .about-bio {
+    font-size: 15px;
+    color: var(--text-mid);
+    line-height: 1.8;
+    margin-bottom: 1.75rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-inner {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-inner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blue-mid), transparent);
+  }
+  .contact-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .contact-headline {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-bottom: 0.75rem;
+  }
+  .contact-sub {
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-bottom: 2rem;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .footer-text {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-schematic { display: none; }
+    .stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .stat:last-child { border-bottom: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-name { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Corner crosshairs -->
+<div class="crosshair tl" aria-hidden="true"></div>
+<div class="crosshair tr" aria-hidden="true"></div>
+<div class="crosshair bl" aria-hidden="true"></div>
+<div class="crosshair br" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">RS<span>.aero</span></a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <header class="hero fade-in">
+    <div class="hero-left">
+      <div class="hero-eyebrow">aerospace engineer</div>
+      <h1 class="hero-name">Rohan<br><em>Sen</em></h1>
+      <div class="hero-sub">B.Tech Aerospace · KIIT University '25</div>
+      <p class="hero-bio">
+        Aerospace engineer with hands-on experience in CFD simulation, 
+        CAD modelling, and turbomachinery. Interested in the intersection 
+        of aerodynamic analysis and real-world engineering systems.
+      </p>
+      <div class="hero-links">
+        <a href="mailto:rohansenwork@gmail.com" class="btn btn-primary">✉ Get in touch</a>
+        <a href="https://www.linkedin.com/in/rohansen012" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-schematic" aria-hidden="true">
+      <svg class="schematic-svg" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer rings -->
+        <circle cx="80" cy="80" r="70" stroke="#185FA5" stroke-width="0.75" stroke-dasharray="4 4"/>
+        <circle cx="80" cy="80" r="55" stroke="#185FA5" stroke-width="0.5" stroke-dasharray="2 6"/>
+        <circle cx="80" cy="80" r="38" stroke="#378ADD" stroke-width="0.75"/>
+        <circle cx="80" cy="80" r="20" stroke="#378ADD" stroke-width="1" fill="rgba(56,138,221,0.05)"/>
+        <circle cx="80" cy="80" r="6"  fill="#378ADD" opacity="0.8"/>
+        <!-- Cross hairs -->
+        <line x1="80" y1="10" x2="80" y2="148" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
+        <line x1="12" y1="80" x2="148" y2="80" stroke="#185FA5" stroke-width="0.5" opacity="0.5"/>
+        <!-- Tick marks on outer ring -->
+        <line x1="80" y1="10" x2="80" y2="18" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="80" y1="142" x2="80" y2="150" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="10" y1="80" x2="18" y2="80" stroke="#378ADD" stroke-width="1.5"/>
+        <line x1="142" y1="80" x2="150" y2="80" stroke="#378ADD" stroke-width="1.5"/>
+        <!-- Airfoil-like shape -->
+        <path d="M44 80 Q70 62 116 76 Q70 98 44 80Z" stroke="#85B7EB" stroke-width="1" fill="rgba(56,138,221,0.06)"/>
+        <!-- Data labels -->
+        <text x="84" y="28" fill="#378ADD" font-family="monospace" font-size="7" opacity="0.8">0°</text>
+        <text x="84" y="156" fill="#378ADD" font-family="monospace" font-size="7" opacity="0.8">180°</text>
+        <text x="130" y="83" fill="#378ADD" font-family="monospace" font-size="7" opacity="0.8">090°</text>
+      </svg>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats fade-in">
+    <div class="stat">
+      <span class="stat-num">1</span>
+      <span class="stat-label">CFD Project</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5+</span>
+      <span class="stat-label">Tools & Softwares</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">HAL</span>
+      <span class="stat-label">Industry Exposure</span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="fade-in">
+    <div class="section-header">
+      <span class="section-tag">01</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-index">P-01</span>
+        <span class="project-tag">CFD</span>
+        <span class="project-tag">Aerodynamics</span>
+      </div>
+      <h3 class="project-title">CFD Analysis of NACA 0012 Airfoil with Slotted Flap</h3>
+      <p class="project-desc">
+        Conducted a full CFD study on the NACA 0012 airfoil across an angle-of-attack range 
+        of 0° to 20°, capturing coefficient of lift and drag alongside detailed flow visualisation. 
+        A slotted flap variant was modelled and compared against the baseline — quantifying the 
+        percentage increase in lift and drag, and examining differences in velocity contours and 
+        pressure distribution around both configurations.
+      </p>
+      <p class="project-desc">
+        Designed the slotted flap geometry in SolidWorks and executed the full simulation 
+        pipeline in Ansys Fluent, from mesh generation through post-processing of results.
+      </p>
+      <div class="project-tools">
+        <span class="tool-chip">Ansys Fluent</span>
+        <span class="tool-chip">SolidWorks</span>
+        <span class="tool-chip">CFD</span>
+        <span class="tool-chip">Aerodynamic Analysis</span>
+        <span class="tool-chip">Pressure Distribution</span>
+        <span class="tool-chip">Velocity Contours</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="fade-in">
+    <div class="section-header">
+      <span class="section-tag">02</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-role">Aerospace Engineering Intern</div>
+          <div class="exp-company">Hindustan Aeronautics Limited (HAL) — Koraput Division</div>
+        </div>
+        <span class="exp-date">May 2023 – Jun 2023</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Gained hands-on exposure to turbomachinery assembly and manufacturing processes in a high-precision defence aerospace environment.</li>
+        <li>Observed and documented engineering workflows, safety practices, and system integration protocols across production lines.</li>
+        <li>Prepared a detailed technical report on project management practices, demonstrating proficiency in MS Office tools.</li>
+        <li>Collaborated directly with engineers across teams, building practical understanding of real-world aerospace operations.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="fade-in">
+    <div class="section-header">
+      <span class="section-tag">03</span>
+      <h2 class="section-title">Skills & Tools</h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-label">Simulation & Analysis</div>
+        <div class="skill-list">
+          <span class="skill-pill">Ansys Fluent</span>
+          <span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">Simulink</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">CAD & Design</div>
+        <div class="skill-list">
+          <span class="skill-pill">SolidWorks</span>
+          <span class="skill-pill">Fusion 360</span>
+          <span class="skill-pill">AutoCAD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Data & Productivity</div>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Excel</span>
+          <span class="skill-pill">PowerPoint</span>
+          <span class="skill-pill">Word</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-list">
+      <div style="font-family:var(--mono); font-size:10px; color:var(--text-muted); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:0.5rem;">Certifications</div>
+      <div class="cert-item"><span class="cert-dot"></span>Ansys Training — Internshala</div>
+      <div class="cert-item"><span class="cert-dot"></span>MATLAB Onramp — MathWorks</div>
+      <div class="cert-item"><span class="cert-dot"></span>Simulink Onramp — MathWorks</div>
+      <div class="cert-item"><span class="cert-dot"></span>GE Aerospace Engineering Job Simulation — Forage</div>
+      <div class="cert-item"><span class="cert-dot"></span>Data Analysis with Python — freeCodeCamp</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="fade-in">
+    <div class="section-header">
+      <span class="section-tag">04</span>
+      <h2 class="section-title">About Me</h2>
+    </div>
+
+    <p class="about-bio">
+      I'm an aerospace engineer from Ranchi, Jharkhand, and a graduate of KIIT University's 
+      B.Tech programme in Aerospace Engineering. I care about understanding how things 
+      work under pressure — literally and figuratively — from airfoil aerodynamics to 
+      turbomachinery on the factory floor.
+    </p>
+
+    <div class="about-grid">
+      <div class="about-block">
+        <span class="about-block-icon">🎸</span>
+        <div class="about-block-title">Music</div>
+        <p class="about-block-body">
+          Grade 2 guitarist certified by the London College of Music. Served as bassist for my college's metal band — and had the chance to open for Royal Stag Boom Box. Engineering and music share more than people think.
+        </p>
+      </div>
+      <div class="about-block">
+        <span class="about-block-icon">🚁</span>
+        <div class="about-block-title">Drone Building</div>
+        <p class="about-block-body">
+          Participated in <em>Lift Off</em>, a drone-building workshop organised by KIIT Robotics Society — assembled a fully functional drone with my team from scratch. Closest I've come to building something that actually flies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="fade-in">
+    <div class="section-header">
+      <span class="section-tag">05</span>
+      <h2 class="section-title">Contact</h2>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-label">// open to opportunities</div>
+      <h3 class="contact-headline">Let's connect.</h3>
+      <p class="contact-sub">
+        Whether it's a role, a collaboration, or just a conversation about 
+        aerospace — I'm always open to hearing from people in the field.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:rohansenwork@gmail.com" class="btn btn-primary">rohansenwork@gmail.com</a>
+        <a href="https://www.linkedin.com/in/rohansen012" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-text">Rohan Sen · Aerospace Engineer · KIIT University '25 · Built with care.</p>
+</footer>
+
+<script>
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
