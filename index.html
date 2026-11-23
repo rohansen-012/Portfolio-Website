@@ -685,6 +685,72 @@
     .proj-results { grid-template-columns: 1fr; }
   }
 
+  /* ── DASHBOARD PROJECT ── */
+  .proj-fig-link {
+    display: block;
+    text-decoration: none;
+    position: relative;
+  }
+  .proj-fig-link .proj-fig { transition: border-color 0.2s; }
+  .proj-fig-link:hover .proj-fig { border-color: var(--border-str); }
+  .proj-fig-link .launch-hint {
+    position: absolute;
+    top: 10px; right: 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-pale);
+    background: rgba(11,17,24,0.85);
+    border: 1px solid var(--blue-dim);
+    border-radius: var(--radius);
+    padding: 4px 10px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .proj-fig-link:hover .launch-hint,
+  .proj-fig-link:focus-visible .launch-hint { opacity: 1; }
+  .proj-features {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    margin: 0 0 1.5rem;
+  }
+  .proj-features li {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .proj-features li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--blue-dim);
+    font-size: 11px;
+    top: 2px;
+  }
+  .proj-features strong { color: var(--blue-lt); font-weight: 500; }
+  .proj-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .proj-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 640px) {
+    .proj-features { grid-template-columns: 1fr; }
+  }
+
 
   /* ── HAL INTERNSHIP LAYOUT ── */
   .hal-context {
@@ -762,8 +828,8 @@
       <h1 class="hero-name">Rohan<br><em>Sen</em></h1>
       <div class="hero-sub">B.Tech Aerospace · KIIT University '25 · CGPA 8.14</div>
       <p class="hero-bio">
-        Aerospace engineer with hands-on experience in CFD simulation, 
-        CAD modelling, and turbomachinery. Interested in the intersection 
+        Aerospace engineer with hands-on experience in CFD simulation,
+        CAD modelling, turbomachinery and airport operations. Interested in the intersection
         of aerodynamic analysis and real-world engineering systems.
       </p>
       <div class="hero-links">
@@ -801,8 +867,8 @@
   <!-- STATS -->
   <div class="stats fade-in">
     <div class="stat">
-      <span class="stat-num">1</span>
-      <span class="stat-label">CFD Project</span>
+      <span class="stat-num">2</span>
+      <span class="stat-label">Engineering Projects</span>
     </div>
     <div class="stat">
       <span class="stat-num">5+</span>
@@ -821,23 +887,105 @@
       <h2 class="section-title">Projects</h2>
     </div>
 
+    <!-- P-01 · AIRPORT OPERATIONS DASHBOARD -->
     <div class="project-card">
       <div class="project-meta">
         <span class="project-index">P-01</span>
+        <span class="project-tag">Airport Operations</span>
+        <span class="project-tag">Data Visualisation</span>
+        <span class="project-index" style="margin-left:auto; color:var(--text-muted);">Nov 2026</span>
+      </div>
+      <h3 class="project-title">Airport Operations Dashboard — Indira Gandhi International Airport (DEL)</h3>
+      <p class="project-desc">
+        A real-time style operations control centre for Delhi's IGI Airport, built as a single
+        web page. An animated airfield map shows all four runways, Terminals 1, 2 and 3, the cargo
+        apron and the Eastern Cross Taxiway, with aircraft flying the approach, landing, taxiing,
+        parking, pushing back and taking off. Around it sit the numbers an airport operations
+        team watches through the day: movements against runway capacity, on-time performance,
+        security waits, stand occupancy, baggage, cargo and weather.
+      </p>
+      <p class="project-desc">
+        The dashboard runs on a built-in simulation of a typical DEL day (about 1,400 movements),
+        and can switch to live data through a small Python server: real aircraft positions from
+        ADS-B, the VIDP METAR, and the real arrivals and departures board.
+      </p>
+
+      <!-- KEY NUMBERS -->
+      <div class="proj-results">
+        <div class="proj-result-item">
+          <span class="proj-result-num">4</span>
+          <span class="proj-result-label">Runways &amp; 3 terminals<br>modelled to layout</span>
+        </div>
+        <div class="proj-result-item">
+          <span class="proj-result-num">~1,400</span>
+          <span class="proj-result-label">Daily flight movements<br>simulated</span>
+        </div>
+        <div class="proj-result-item">
+          <span class="proj-result-num">3</span>
+          <span class="proj-result-label">Live data feeds<br>ADS-B · METAR · FIDS</span>
+        </div>
+      </div>
+
+      <!-- SCREENSHOT -->
+      <div class="proj-gallery-label">// operations centre</div>
+      <div class="proj-gallery">
+        <a class="proj-fig-link" href="airport-dashboard/index.html" target="_blank" rel="noopener" aria-label="Open the live Airport Operations Dashboard demo">
+          <figure class="proj-fig">
+            <img src="airport-dashboard-preview.png" alt="Airport operations dashboard for Delhi IGI Airport: headline metrics, animated airfield map with four runways and terminals, and runway status panel" loading="lazy" width="1440" height="900"/>
+            <figcaption>DEL Operations Centre — headline metrics, live airfield map and runway status</figcaption>
+          </figure>
+          <span class="launch-hint">Open demo ↗</span>
+        </a>
+      </div>
+
+      <ul class="proj-features">
+        <li><strong>Airfield map</strong> — hover an aircraft for speed and altitude, click to follow it</li>
+        <li><strong>Arrivals &amp; departures boards</strong> with live flight status</li>
+        <li><strong>Runway status</strong>, operations event log and hourly flight charts</li>
+        <li><strong>Terminal queues</strong> — check-in, security, immigration, baggage belts</li>
+        <li><strong>Aircraft turnarounds</strong> — cleaning, catering, fuelling, bags, boarding</li>
+        <li><strong>Scenarios</strong> — 1× / 10× / 60× speed, fog &amp; low-visibility rules, runway closure</li>
+      </ul>
+
+      <div class="proj-actions">
+        <a href="airport-dashboard/index.html" target="_blank" rel="noopener" class="btn btn-primary">▶ Launch live demo</a>
+      </div>
+
+      <p class="proj-note">
+        Unofficial demo project — not affiliated with DIAL, AAI or any airline. The hosted version
+        runs in simulation mode; live feeds need the local Python server.
+      </p>
+
+      <div class="project-tools">
+        <span class="tool-chip">JavaScript</span>
+        <span class="tool-chip">HTML / CSS</span>
+        <span class="tool-chip">Python</span>
+        <span class="tool-chip">Leaflet</span>
+        <span class="tool-chip">ADS-B (OpenSky · adsb.lol)</span>
+        <span class="tool-chip">METAR</span>
+        <span class="tool-chip">AeroDataBox API</span>
+        <span class="tool-chip">Airport Operations</span>
+      </div>
+    </div>
+
+    <!-- P-02 · CFD NACA 0012 -->
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-index">P-02</span>
         <span class="project-tag">CFD</span>
         <span class="project-tag">Aerodynamics</span>
         <span class="project-index" style="margin-left:auto; color:var(--text-muted);">Jan 2024 – Apr 2025</span>
       </div>
       <h3 class="project-title">CFD Analysis of NACA 0012 Airfoil with Slotted Flap</h3>
       <p class="project-desc">
-        Conducted a full CFD study on the NACA 0012 airfoil across an angle-of-attack range 
-        of 0° to 20°, capturing coefficient of lift and drag alongside detailed flow visualisation. 
-        A slotted flap variant was modelled and compared against the baseline — quantifying the 
-        percentage increase in lift and drag, and examining differences in velocity contours and 
+        Conducted a full CFD study on the NACA 0012 airfoil across an angle-of-attack range
+        of 0° to 20°, capturing coefficient of lift and drag alongside detailed flow visualisation.
+        A slotted flap variant was modelled and compared against the baseline — quantifying the
+        percentage increase in lift and drag, and examining differences in velocity contours and
         pressure distribution around both configurations.
       </p>
       <p class="project-desc">
-        Designed the slotted flap geometry in SolidWorks and executed the full simulation 
+        Designed the slotted flap geometry in SolidWorks and executed the full simulation
         pipeline in Ansys Fluent, from mesh generation through post-processing of results.
       </p>
 
@@ -932,7 +1080,7 @@
       <div class="hal-context">
         <div class="hal-context-text">
           <p class="hal-context-intro">
-            HAL Koraput is one of India's premier defence aerospace facilities, manufacturing and 
+            HAL Koraput is one of India's premier defence aerospace facilities, manufacturing and
             overhauling the <strong>AL-31FP turbofan engine</strong> that powers the IAF's Su-30MKI fleet.
           </p>
         </div>
@@ -984,6 +1132,14 @@
           <span class="skill-pill">Word</span>
         </div>
       </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Web & Dashboards</div>
+        <div class="skill-list">
+          <span class="skill-pill">JavaScript</span>
+          <span class="skill-pill">HTML / CSS</span>
+          <span class="skill-pill">REST APIs</span>
+        </div>
+      </div>
     </div>
 
     <div class="cert-list">
@@ -1004,9 +1160,9 @@
     </div>
 
     <p class="about-bio">
-      I'm an aerospace engineer from Ranchi, Jharkhand, and a graduate of KIIT University's 
-      B.Tech programme in Aerospace Engineering. I care about understanding how things 
-      work under pressure — literally and figuratively — from airfoil aerodynamics to 
+      I'm an aerospace engineer from Ranchi, Jharkhand, and a graduate of KIIT University's
+      B.Tech programme in Aerospace Engineering. I care about understanding how things
+      work under pressure — literally and figuratively — from airfoil aerodynamics to
       turbomachinery on the factory floor.
     </p>
 
@@ -1038,7 +1194,7 @@
       <div class="contact-label">// open to opportunities</div>
       <h3 class="contact-headline">Let's connect.</h3>
       <p class="contact-sub">
-        Whether it's a role, a collaboration, or just a conversation about 
+        Whether it's a role, a collaboration, or just a conversation about
         aerospace — I'm always open to hearing from people in the field.
       </p>
       <div class="contact-links">
